@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>YouTube Video Downloader</title>
+</head>
+<body>
+    <h1>YouTube Video Downloader</h1>
+    <input type="text" id="videoUrl" placeholder="Enter YouTube video URL">
+    <button onclick="downloadVideo()">Download</button>
+    <p id="message"></p>
+
+    <script>
+        function downloadVideo() {
+            const videoUrl = document.getElementById('videoUrl').value;
+            const messageElement = document.getElementById('message');
+            
+            fetch('/download', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ video_url: videoUrl })
+            })
+            .then(response => response.json())
+            .then(data => {
+                messageElement.textContent = data.message;
+            })
+            .catch(error => {
+                messageElement.textContent = 'Error: ' + error.message;
+            });
+        }
+    </script>
+</body>
+</html>
