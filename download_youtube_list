@@ -1,0 +1,69 @@
+import pytube
+
+# Get the playlist URL
+playlist_url = "PUT THE LIST URL HERE ..."
+
+# Create a playlist object
+playlist = pytube.Playlist(playlist_url)
+
+# Get the number of videos in the playlist
+number_of_videos = len(playlist.videos)
+
+print(number_of_videos)
+
+# Create a directory to store the downloaded videos
+download_directory = "downloads_dir"
+
+
+'''
+# Loop through all the videos in the playlist and show the title
+for i in range(6, number_of_videos):
+    
+     # Get the video object
+    video = playlist.videos[i]
+
+    # Get the video title
+    video_title = video.title
+
+    # Get the video URL
+    video_url = video.watch_url
+    
+    print(f"Available video {i+1} of {number_of_videos}: {video_title}")
+'''
+
+'''
+# Loop through all the videos in the playlist and download them and save then with the title name
+for i in range(6, number_of_videos):
+    
+     # Get the video object
+    video = playlist.videos[i]
+
+    # Get the video title
+    video_title = video.title
+
+    # Get the video URL
+    video_url = video.watch_url
+
+    # Get the highest resolution video
+    highest_resolution_video = video.streams.get_highest_resolution()
+
+    # Download the video
+    highest_resolution_video.download(download_directory, filename=f"{video_title}_{i}.mp4")
+
+    print(f"Downloaded video {i+1} of {number_of_videos}: {video_title}")
+'''
+
+# Loop through all the videos in the playlist and download them with video number
+for i in range(0, number_of_videos):
+    # Get the video URL
+    video_url = playlist.videos[i].watch_url
+
+    # Download the video with highest resolution
+    
+    video = pytube.YouTube(video_url)
+    highest_resolution_video = video.streams.get_highest_resolution()
+    highest_resolution_video.download(download_directory, filename=f"video_{i+1}.mp4")
+
+    print(f"Downloaded video {i+1} of {number_of_videos}: {video_url}")
+
+print("Program Complete")
